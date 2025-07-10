@@ -26,16 +26,14 @@ dependencies {
 }
 
 paper {
-    main = "me.sytex.plugin.Plugin"
-    bootstrapper = "me.sytex.plugin.Bootstrap"
-    loader = "me.sytex.plugin.Loader"
+    main = "me.sytex.endpoint.EndPoint"
 
     apiVersion = "1.21"
 
     foliaSupported = true
 
-    name = "Plugin"
-    description = "A Paper Plugin Template"
+    name = "EndPoint"
+    description = ""
     version = project.version as String
 
     authors = listOf("Sytex")
