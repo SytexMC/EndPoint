@@ -18,20 +18,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.sytex.endpoint;
+package me.sytex.endpoint.api.exception;
 
-import me.sytex.endpoint.api.ApiServer;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.javalin.Javalin;
+import me.sytex.endpoint.api.response.ApiResponse;
+import org.jetbrains.annotations.NotNull;
 
-public class EndPoint extends JavaPlugin {
+public class GlobalErrorHandler {
 
-  @Override
-  public void onEnable() {
-    ApiServer.start(4567, "me.sytex.endpoint.api.routes.v1");
-  }
+  public static void configure(@NotNull Javalin app) {
+    app.exception(ApiException.class, (e, ctx) -> {
+      ApiResponse<?> response = ApiResponse.error(e.getMessage());
+      ctx.status(e.getStatusCode()).json(response);
+    });
 
-  @Override
-  public void onDisable() {
-    ApiServer.stop();
+    app.exception(Exception.class, (e, ctx) -> {
+      ApiResponse<?> response = ApiResponse.error("Internal Server Error");
+      ctx.status(500).json(response);
+    });
+
+    app.error(404, ctx -> {
+      ApiResponse<?> response = ApiResponse.error("Resource not found");
+      ctx.json(response);
+    });
   }
 }

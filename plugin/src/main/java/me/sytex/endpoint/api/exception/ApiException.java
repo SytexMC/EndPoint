@@ -18,20 +18,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.sytex.endpoint;
+package me.sytex.endpoint.api.exception;
 
-import me.sytex.endpoint.api.ApiServer;
-import org.bukkit.plugin.java.JavaPlugin;
+import lombok.Getter;
 
-public class EndPoint extends JavaPlugin {
+public class ApiException extends RuntimeException {
 
-  @Override
-  public void onEnable() {
-    ApiServer.start(4567, "me.sytex.endpoint.api.routes.v1");
-  }
+  @Getter
+  private final int statusCode;
 
-  @Override
-  public void onDisable() {
-    ApiServer.stop();
+  public ApiException(int statusCode, String message) {
+    super(message);
+    this.statusCode = statusCode;
   }
 }

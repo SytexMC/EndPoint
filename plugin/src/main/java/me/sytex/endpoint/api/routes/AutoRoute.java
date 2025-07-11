@@ -18,20 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.sytex.endpoint;
+package me.sytex.endpoint.api.routes;
 
-import me.sytex.endpoint.api.ApiServer;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.javalin.http.HandlerType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.annotation.ElementType;
 
-public class EndPoint extends JavaPlugin {
-
-  @Override
-  public void onEnable() {
-    ApiServer.start(4567, "me.sytex.endpoint.api.routes.v1");
-  }
-
-  @Override
-  public void onDisable() {
-    ApiServer.stop();
-  }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface AutoRoute {
+  String path() default "/";
+  HandlerType method() default HandlerType.GET;
 }
+

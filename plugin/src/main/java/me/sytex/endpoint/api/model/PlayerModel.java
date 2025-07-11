@@ -18,20 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.sytex.endpoint;
+package me.sytex.endpoint.api.model;
 
-import me.sytex.endpoint.api.ApiServer;
-import org.bukkit.plugin.java.JavaPlugin;
+import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
 
-public class EndPoint extends JavaPlugin {
-
-  @Override
-  public void onEnable() {
-    ApiServer.start(4567, "me.sytex.endpoint.api.routes.v1");
-  }
-
-  @Override
-  public void onDisable() {
-    ApiServer.stop();
-  }
+@Data
+@Builder
+public class PlayerModel {
+  private String name;
+  private UUID uuid;
+  private String ip;
+  private String client;
 }
+
