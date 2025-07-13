@@ -23,6 +23,7 @@ package me.sytex.endpoint.api.routes.v1;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import me.sytex.endpoint.api.exception.ApiException;
@@ -41,6 +42,15 @@ public class GetPlayersRoute implements Route<List<PlayerModel>> {
   @Override
   public ApiResponse<List<PlayerModel>> processRequest(@NotNull Context ctx) throws ApiException {
     List<PlayerModel> players = new ArrayList<>();
+    Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+
+    if (Bukkit.getOnlinePlayers().isEmpty()) {
+      return ApiResponse.<List<PlayerModel>>builder()
+          .success(true)
+          .timestamp(System.currentTimeMillis())
+          .context("No players online!")
+          .build();
+    }
 
     for (Player player : Bukkit.getOnlinePlayers()) {
       players.add(PlayerModel.builder()
@@ -51,7 +61,12 @@ public class GetPlayersRoute implements Route<List<PlayerModel>> {
           .build());
     }
 
-    return ApiResponse.success(players);
+    return ApiResponse.<List<PlayerModel>>builder()
+        .success(true)
+        .timestamp(System.currentTimeMillis())
+        .context("Gathered data from " + onlinePlayers.size() + " players.")
+        .data(players)
+        .build();
   }
 }
 

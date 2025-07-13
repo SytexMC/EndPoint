@@ -21,46 +21,32 @@
 package me.sytex.endpoint.api.response;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.HashMap;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class ApiResponse<T> {
 
-  @Getter @SerializedName("success")
+  @SerializedName("success")
   private final boolean success;
 
-  @Getter @SerializedName("data")
-  private final T data;
-
-  @Getter @SerializedName("message")
-  private final String message;
-
-  @Getter @SerializedName("timestamp")
+  @SerializedName("timestamp")
   private final long timestamp;
 
-  @Getter @SerializedName("meta")
+  @Nullable
+  @SerializedName("context")
+  private final String context;
+
+  @Nullable
+  @SerializedName("data")
+  private final T data;
+
+  @Nullable
+  @SerializedName("meta")
   private final Map<String, Object> meta;
-
-  private ApiResponse(boolean success, @Nullable T data, @Nullable Map<String, Object> meta, @Nullable String message) {
-    this.success = success;
-    this.data = data;
-    this.message = message;
-    this.timestamp = System.currentTimeMillis();
-    this.meta = meta != null ? meta : new HashMap<>();
-  }
-
-  public static <T> @NotNull ApiResponse<T> success(@NotNull T data) {
-    return new ApiResponse<>(true, data, null, null);
-  }
-
-  public static <T> @NotNull ApiResponse<T> success(@NotNull T data, @NotNull String message) {
-    return new ApiResponse<>(true, data, null, message);
-  }
-
-  public static <T> @NotNull ApiResponse<T> error(@NotNull String message) {
-    return new ApiResponse<>(false, null, null, message);
-  }
 }

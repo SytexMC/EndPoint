@@ -47,22 +47,34 @@ public interface Route<T> {
     }
   }
 
-  private void handleValidationError(Context ctx, ValidationException e) {
+  private void handleValidationError(@NotNull Context ctx, @NotNull ValidationException e) {
     log.debug("Validation error: {}", e.getMessage());
-    sendJsonResponse(ctx, 400, ApiResponse.error(e.getMessage()));
+    sendJsonResponse(ctx, 400, ApiResponse.builder()
+        .success(false)
+        .timestamp(System.currentTimeMillis())
+        .context(e.getMessage())
+        .build());
   }
 
-  private void handleApiError(Context ctx, ApiException e) {
+  private void handleApiError(@NotNull Context ctx, @NotNull ApiException e) {
     log.warn("API error: {}", e.getMessage());
-    sendJsonResponse(ctx, e.getStatusCode(), ApiResponse.error(e.getMessage()));
+    sendJsonResponse(ctx, e.getStatusCode(), ApiResponse.builder()
+        .success(false)
+        .timestamp(System.currentTimeMillis())
+        .context(e.getMessage())
+        .build());
   }
 
-  private void handleInternalError(Context ctx, Exception e) {
+  private void handleInternalError(@NotNull Context ctx, @NotNull Exception e) {
     log.error("Internal server error", e);
-    sendJsonResponse(ctx, 500, ApiResponse.error("Internal Server Error"));
+    sendJsonResponse(ctx, 500, ApiResponse.builder()
+        .success(false)
+        .timestamp(System.currentTimeMillis())
+        .context("Internal Server Error!")
+        .build());
   }
 
-  private void sendJsonResponse(Context ctx, int status, ApiResponse<?> response) {
+  private void sendJsonResponse(@NotNull Context ctx, int status, @NotNull ApiResponse<?> response) {
     ctx.contentType("application/json");
     ctx.status(status).json(response);
   }
