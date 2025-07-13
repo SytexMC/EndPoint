@@ -31,6 +31,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 @AutoRoute(path = "/api/v1/server", method = HandlerType.GET)
 public class GetServerInfoRoute implements Route<ServerInfoModel> {
 
