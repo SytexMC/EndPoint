@@ -28,17 +28,32 @@ public class GlobalErrorHandler {
 
   public static void configure(@NotNull Javalin app) {
     app.exception(ApiException.class, (e, ctx) -> {
-      ApiResponse<?> response = ApiResponse.error(e.getMessage());
+      ApiResponse<?> response = ApiResponse.builder()
+          .success(false)
+          .timestamp(System.currentTimeMillis())
+          .context(e.getMessage())
+          .build();
+
       ctx.status(e.getStatusCode()).json(response);
     });
 
     app.exception(Exception.class, (e, ctx) -> {
-      ApiResponse<?> response = ApiResponse.error("Internal Server Error");
+      ApiResponse<?> response = ApiResponse.builder()
+          .success(false)
+          .timestamp(System.currentTimeMillis())
+          .context("Internal Server Error!")
+          .build();
+
       ctx.status(500).json(response);
     });
 
     app.error(404, ctx -> {
-      ApiResponse<?> response = ApiResponse.error("Resource not found");
+      ApiResponse<?> response = ApiResponse.builder()
+          .success(false)
+          .timestamp(System.currentTimeMillis())
+          .context("Resource not found!")
+          .build();
+
       ctx.json(response);
     });
   }
