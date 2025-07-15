@@ -17,7 +17,7 @@ tasks {
     processResources { filteringCharset = Charsets.UTF_8.name() }
 
     runServer {
-        minecraftVersion("1.21.5")
+        minecraftVersion("1.21.7")
         jvmArgs("-Dcom.mojang.eula.agree=true")
     }
 }
