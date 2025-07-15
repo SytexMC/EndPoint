@@ -39,7 +39,7 @@ paper {
     foliaSupported = true
 
     name = "EndPoint"
-    description = ""
+    description = "Exposes a RESTful API for interacting with Minecraft servers."
     version = project.version as String
 
     authors = listOf("Sytex")
