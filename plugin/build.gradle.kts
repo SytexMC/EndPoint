@@ -2,7 +2,7 @@ plugins {
     `java-library`
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("de.eldoria.plugin-yml.paper") version "0.7.1"
-    id("com.gradleup.shadow") version "9.0.0-rc1"
+    id("com.gradleup.shadow") version "9.0.0-SNAPSHOT"
 }
 
 java { toolchain.languageVersion.set(JavaLanguageVersion.of(project.ext.get("javaToolchainVersion") as Int)) }
