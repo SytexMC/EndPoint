@@ -23,7 +23,7 @@ tasks {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")  // PaperMC
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")  // PaperMC
     implementation("com.google.code.gson:gson:2.13.1")              // Gson
     implementation("org.reflections:reflections:0.10.2")            // Reflections
     implementation("io.javalin:javalin:6.7.0")                      // Javalin
